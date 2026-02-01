@@ -30,25 +30,25 @@ class ReferenceDataHandler:
         self.reference_populations = None
         self.snp_ids = None
         
-    def load_reference_data(self, filepath: str, format: str = 'csv') -> Tuple[np.ndarray, List[str]]:
+    def load_reference_data(self, filepath: str, file_format: str = 'csv') -> Tuple[np.ndarray, List[str]]:
         """
         Load reference genetic data from file.
         
         Args:
             filepath: Path to reference data file
-            format: Format of the file ('csv', 'vcf', 'plink')
+            file_format: Format of the file ('csv', 'vcf', 'plink')
             
         Returns:
             Tuple of (data_matrix, population_labels)
         """
-        if format == 'csv':
+        if file_format == 'csv':
             return self._load_csv(filepath)
-        elif format == 'vcf':
+        elif file_format == 'vcf':
             raise NotImplementedError("VCF format not yet implemented")
-        elif format == 'plink':
+        elif file_format == 'plink':
             raise NotImplementedError("PLINK format not yet implemented")
         else:
-            raise ValueError(f"Unsupported format: {format}")
+            raise ValueError(f"Unsupported file_format: {file_format}")
     
     def _load_csv(self, filepath: str) -> Tuple[np.ndarray, List[str]]:
         """Load reference data from CSV file."""

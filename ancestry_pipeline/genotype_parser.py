@@ -136,7 +136,7 @@ class GenotypeParser:
         
         Returns:
             Tuple of (numeric_matrix, rsid_list)
-            Matrix encoding: 0=homozygous ref, 1=heterozygous, 2=homozygous alt
+            Matrix encoding: 0=homozygous first, 1=heterozygous, 2=homozygous second
         """
         if self.data is None:
             raise ValueError("No data loaded. Call parse_file first.")
@@ -150,8 +150,9 @@ class GenotypeParser:
                 allele1, allele2 = genotype[0], genotype[1]
                 # Simple encoding based on allele match
                 if allele1 == allele2:
-                    # Homozygous - assign 0 or 2 based on alphabetical order
-                    value = 0 if allele1 < allele2 else 2
+                    # Homozygous - use alphabetical order for consistency
+                    # A < C < G < T
+                    value = 0 if allele1 in ['A', 'C'] else 2
                 else:
                     # Heterozygous
                     value = 1

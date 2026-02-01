@@ -82,6 +82,18 @@ class PCAAnalyzer:
         
         return self.pca.explained_variance_ratio_
     
+    def _calculate_euclidean_distances(self, user_projection: np.ndarray) -> np.ndarray:
+        """
+        Calculate Euclidean distances from user to all reference samples.
+        
+        Args:
+            user_projection: User's coordinates in PCA space
+            
+        Returns:
+            Array of distances
+        """
+        return np.sqrt(np.sum((self.reference_projections - user_projection) ** 2, axis=1))
+    
     def get_nearest_populations(self, user_projection: np.ndarray, 
                                k: int = 5) -> Dict[str, float]:
         """
@@ -98,7 +110,7 @@ class PCAAnalyzer:
             raise ValueError("Reference data not fitted.")
         
         # Calculate distances to all reference samples
-        distances = np.sqrt(np.sum((self.reference_projections - user_projection) ** 2, axis=1))
+        distances = self._calculate_euclidean_distances(user_projection)
         
         # Find k nearest
         nearest_indices = np.argsort(distances)[:k]
@@ -133,7 +145,7 @@ class PCAAnalyzer:
             raise ValueError("Reference data not fitted.")
         
         # Calculate distances to all reference samples
-        distances = np.sqrt(np.sum((self.reference_projections - user_projection) ** 2, axis=1))
+        distances = self._calculate_euclidean_distances(user_projection)
         
         # Find n nearest neighbors
         nearest_indices = np.argsort(distances)[:n_neighbors]

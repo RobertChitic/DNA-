@@ -21,9 +21,9 @@ def example_with_synthetic_data():
     print("Example: Ancestry Analysis with Synthetic Reference Data")
     print("=" * 60)
     
-    # Create synthetic user data
+    # Create synthetic user data (use consistent seed with rest of codebase)
     print("\n1. Creating synthetic user genotype data...")
-    np.random.seed(123)
+    np.random.seed(42)
     user_data = np.random.binomial(2, 0.45, (1, 1000))  # 1 individual, 1000 SNPs
     print(f"   Created data: {user_data.shape[0]} individual, {user_data.shape[1]} SNPs")
     
