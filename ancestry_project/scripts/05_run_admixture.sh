@@ -120,12 +120,12 @@ run_admixture() {
             # Run ADMIXTURE with cross-validation
             admixture --cv -j${N_THREADS} "${input_basename}.bed" $k 2>&1 | tee -a "$LOG_FILE"
             
-            # Extract CV error
-            local cv_error=$(grep "CV error" "${work_dir}/admixture_log_k${k}.txt" 2>/dev/null | awk '{print $NF}' || grep -o "CV error.*" *.log 2>/dev/null | tail -1 | awk '{print $NF}')
+            # Extract CV error from ADMIXTURE output captured in LOG_FILE
+            local cv_error=$(grep "CV error (K=${k})" "$LOG_FILE" | tail -1 | awk '{print $NF}')
             
             if [[ -z "$cv_error" ]]; then
-                # Try to get CV error from stdout saved to log
-                cv_error=$(grep "CV error (K=${k})" "$LOG_FILE" | tail -1 | awk '{print $NF}')
+                # Fallback: try to get from any log files in work directory
+                cv_error=$(grep -o "CV error.*" "${work_dir}"/*.log 2>/dev/null | tail -1 | awk '{print $NF}' || true)
             fi
             
             if [[ -n "$cv_error" ]]; then

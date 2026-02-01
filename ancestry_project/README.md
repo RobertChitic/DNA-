@@ -239,12 +239,12 @@ The pipeline consists of 10 sequential steps:
 ```bash
 # Using environment variables
 export N_PCS=15
-export BANDWIDTH=0.4
+export BANDWIDTH=0.3  # Lower bandwidth = narrower kernel = more localized comparisons
 export BOOTSTRAP=1000
 ./run_all.sh your_data.txt
 
 # Or inline
-N_PCS=15 BANDWIDTH=0.4 ./run_all.sh your_data.txt
+N_PCS=15 BOOTSTRAP=1000 ./run_all.sh your_data.txt
 ```
 
 ---

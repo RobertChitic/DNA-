@@ -25,7 +25,7 @@ set -euo pipefail
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+PROJECT_DIR="$SCRIPT_DIR"  # run_all.sh is in the project root
 
 # Parameters
 ANCESTRY_FILE="${1:-}"

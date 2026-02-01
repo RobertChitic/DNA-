@@ -279,7 +279,13 @@ update_fam_with_population() {
     
     awk -v metadata="$metadata_file" '
     BEGIN {
+        # Read metadata file, skip header line
+        header_read = 0;
         while ((getline line < metadata) > 0) {
+            if (!header_read) {
+                header_read = 1;
+                continue;  # Skip header
+            }
             split(line, a, "\t");
             pop[a[1]] = a[2];
         }

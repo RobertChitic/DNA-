@@ -210,17 +210,8 @@ def main():
     # Calculate ensemble
     ensemble_df = calculate_ensemble(pca_df, admixture_df, weights)
     
-    # Rename columns for final output
-    final_df = ensemble_df.rename(columns={
-        'PCA_%': 'PCA_%',
-        'ADMIXTURE_%': 'ADMIXTURE_%',
-        'Ensemble_%': 'Ensemble_%'
-    })
-    
-    # Also create version with renamed columns for compatibility
-    output_df = ensemble_df.rename(columns={
-        'Ensemble_%': 'Ensemble_Probability'
-    })
+    # Use ensemble_df directly for final output
+    final_df = ensemble_df.copy()
     
     # Save results
     output_dir = os.path.dirname(args.output)

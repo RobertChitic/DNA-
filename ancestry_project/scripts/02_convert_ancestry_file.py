@@ -216,6 +216,7 @@ def write_plink_files(df: pd.DataFrame, output_prefix: str, sample_id: str = "US
     map_df = map_df[['chromosome', 'rsid', 'genetic_distance', 'position']]
     
     # Convert chromosome codes for PLINK
+    # PLINK uses numeric codes: 23=X, 24=Y, 26=MT (mitochondrial)
     chrom_map = {'X': '23', 'Y': '24', 'MT': '26', 'M': '26'}
     map_df['chromosome'] = map_df['chromosome'].replace(chrom_map)
     

@@ -295,18 +295,27 @@ def plot_comparison(
     
     if os.path.exists(pca_probs_file):
         pca_df = pd.read_csv(pca_probs_file)
-        dfs['PCA'] = pca_df[['Country', 'PCA_Probability']].rename(
-            columns={'PCA_Probability': 'Probability'})
+        # Handle different column name conventions
+        prob_col = 'PCA_Probability' if 'PCA_Probability' in pca_df.columns else 'PCA_%'
+        if prob_col in pca_df.columns:
+            dfs['PCA'] = pca_df[['Country', prob_col]].rename(
+                columns={prob_col: 'Probability'})
     
     if os.path.exists(admixture_probs_file):
         adm_df = pd.read_csv(admixture_probs_file)
-        dfs['ADMIXTURE'] = adm_df[['Country', 'ADMIXTURE_Probability']].rename(
-            columns={'ADMIXTURE_Probability': 'Probability'})
+        # Handle different column name conventions
+        prob_col = 'ADMIXTURE_Probability' if 'ADMIXTURE_Probability' in adm_df.columns else 'ADMIXTURE_%'
+        if prob_col in adm_df.columns:
+            dfs['ADMIXTURE'] = adm_df[['Country', prob_col]].rename(
+                columns={prob_col: 'Probability'})
     
     if os.path.exists(ensemble_file):
         ens_df = pd.read_csv(ensemble_file)
-        dfs['Ensemble'] = ens_df[['Country', 'Ensemble_Probability']].rename(
-            columns={'Ensemble_Probability': 'Probability'})
+        # Handle different column name conventions
+        prob_col = 'Ensemble_Probability' if 'Ensemble_Probability' in ens_df.columns else 'Ensemble_%'
+        if prob_col in ens_df.columns:
+            dfs['Ensemble'] = ens_df[['Country', prob_col]].rename(
+                columns={prob_col: 'Probability'})
     
     if not dfs:
         logger.warning("No probability files found for comparison plot")
